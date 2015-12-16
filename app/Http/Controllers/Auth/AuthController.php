@@ -22,6 +22,8 @@ class AuthController extends Controller
     */
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+	
+	protected $username ='nombre';
 
     /**
      * Create a new authentication controller instance.
@@ -42,7 +44,7 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
+            'nombre' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
@@ -57,33 +59,30 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'nombre' => $data['nombre'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
     }
 
-    protected function getLogin()
-    {
-        return view('auth.login');
-    }
+  protected $redirectPath = '/main';
 
-    public function postLogin()
+///sobreescribiendo los metodos existentes en AuthenticatesUsers vendor/laravel/framework/Illuminate/Foundation/Auth
+
+  /*public function getLogin()
     {
-        //obtenemos los datos del formulario
-        $data=[
-            'username'=>Input::get('username'),
-            'password'=>Input::get('password')
-        ];
-        //verificamos los datos
-        if(Auth::attempt($data, Input::get('remember')))
-        {
-            //si los datos son correctos muestra inicio
-            return Redirect::intended('index');
+        if (view()->exists('auth.authenticate')) {
+            return view('auth.authenticate');
         }
-        //si los datos no son los correctos volvemos al login y mostramos un error
-        return Redirect::back()->with('error_message','Datos invalidos')->withInput();
-    }
 
-    protected $redirectPath = 'template.main';
+        return view('template.main');
+    }*/
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    
 }

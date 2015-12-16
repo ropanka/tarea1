@@ -21,6 +21,7 @@
 
 
             <!-- Nav Starts -->
+            @if(Auth::user())
             <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right scroll">
                   <li class="active"><a href="#inicio">Inicio</a></li>
@@ -31,12 +32,13 @@
                   <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::user()->nombre}} <span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                        <li><a href="#">Salir</a></li>
+                        <li><a href="{{ route('logout') }}">Salir</a></li>
                       </ul>
                   </li>
 
               </ul>
             </div>
+            @endif
             <!-- #Nav Ends -->
 
           </div>

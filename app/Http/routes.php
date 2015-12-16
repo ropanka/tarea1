@@ -14,9 +14,7 @@
 Route::get('/', function () {
     return view('auth.login');
 });
-Route::get('/main', function () {
-    return view('template.main');
-});
+
 
 // Authentication routes...
 Route::get('/login', [
@@ -28,3 +26,9 @@ Route::post('/login', [
 Route::get('/logout', [
 	'uses'	=>'Auth\AuthController@getLogout',
 	'as'	=>'logout']);
+
+Route::group(['middleware' => 'auth'], function () {
+	Route::get('/main', function () {
+		return view('template.main');
+	});
+});
